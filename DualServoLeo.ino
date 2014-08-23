@@ -7,22 +7,15 @@
 
 
 
-int torsoMovementDelay = 360;
-int legMovementDelay = 280;
-
 int servoCenter = 700;
+int torsoMaxMovement = 220;
+int legMaxMovement = 140;
 
-int torsoMin = 480;//220
-int torsoMax = 920;//220
+boolean isTorsoActive = true;
+boolean isLegActive = true;
 
-
-int legMin = 560;//140
-int legMax = 840;//140
-
-
-
-
-boolean isActive = true;
+int torsoMovementDelay = 360;//360
+int legMovementDelay = 280;//280
 
 void setup()  {
   //Servo Control board
@@ -32,40 +25,48 @@ void setup()  {
   Serial.println("DUAL SERVO started");
   
   
-  MoveServo(TORSOCHANNEL, servoCenter);
-  MoveServo(LEGCHANNEL, servoCenter);
+  MoveServo(TORSOCHANNEL, 0);
+  MoveServo(LEGCHANNEL, 0);
   
-  MoveServo(TORSOCHANNEL2, servoCenter);
-  MoveServo(LEGCHANNEL2, servoCenter);
+  MoveServo(TORSOCHANNEL2, 0);
+  MoveServo(LEGCHANNEL2, 0);
 }
 
 
 void loop() {
 
-  if(isActive){
-   
-      MoveServo(TORSOCHANNEL, torsoMin);
-      MoveServo(TORSOCHANNEL2, torsoMax);
+  if(isTorsoActive){
+      MoveServo(TORSOCHANNEL, -torsoMaxMovement);//-220
+      MoveServo(TORSOCHANNEL2, torsoMaxMovement);//220      
       delay(torsoMovementDelay);
+  }    
       
-      MoveServo(LEGCHANNEL, legMax);
-      MoveServo(LEGCHANNEL2, legMin);
+  if(isLegActive){      
+      MoveServo(LEGCHANNEL, legMaxMovement);//140
+      MoveServo(LEGCHANNEL2, -legMaxMovement);//-140
       delay(legMovementDelay);
-   
-      MoveServo(TORSOCHANNEL, torsoMax);
-      MoveServo(TORSOCHANNEL2, torsoMin);
-      delay(torsoMovementDelay);
-      
-      MoveServo(LEGCHANNEL, legMin);
-      MoveServo(LEGCHANNEL2, legMax);
-      delay(legMovementDelay);
-      
   }
+  if(isTorsoActive){   
+      MoveServo(TORSOCHANNEL, torsoMaxMovement);//220
+      MoveServo(TORSOCHANNEL2, -torsoMaxMovement);//-220
+      delay(torsoMovementDelay);
+  }
+  
+  if(isLegActive){      
+      MoveServo(LEGCHANNEL, -legMaxMovement);//-140
+      MoveServo(LEGCHANNEL2, legMaxMovement);//140
+      delay(legMovementDelay);
+  }    
+
 }
 
 
 
-void MoveServo(int servo_channel, int servo_angle){
+void MoveServo(int servo_channel, int movement){
+
+  
+    int servo_angle = servoCenter + movement;
+  
   
     byte lsb = servo_angle;
     byte msb =  servo_angle >> 8;
