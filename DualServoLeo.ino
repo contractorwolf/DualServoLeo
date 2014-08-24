@@ -6,16 +6,19 @@
 #define LEGCHANNEL2 6
 
 
+//serial connection diagram for Parallax Rev B servo controller
+//http://forums.parallax.com/showthread.php/153990-Parallax-Servo-Controller-%E2%80%93-USB-(-28823)-Rev-B
+
 
 int servoCenter = 700;
-int torsoMaxMovement = 220;
-int legMaxMovement = 140;
+int torsoMaxMovement = 120;//220 max
+int legMaxMovement = 80;//140 max
 
 boolean isTorsoActive = true;
 boolean isLegActive = true;
 
-int torsoMovementDelay = 360;//360
-int legMovementDelay = 280;//280
+int torsoMovementDelay = 200;//360 max
+int legMovementDelay = 160;//280 max
 
 void setup()  {
   //Servo Control board
@@ -30,6 +33,12 @@ void setup()  {
   
   MoveServo(TORSOCHANNEL2, 0);
   MoveServo(LEGCHANNEL2, 0);
+  
+ 
+  
+  
+  
+  delay(5000);
 }
 
 
