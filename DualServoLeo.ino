@@ -5,20 +5,25 @@
 #define TORSOCHANNEL2 4
 #define LEGCHANNEL2 6
 
+#define TORSOCHANNEL3 8
+#define LEGCHANNEL3 10
 
 //serial connection diagram for Parallax Rev B servo controller
 //http://forums.parallax.com/showthread.php/153990-Parallax-Servo-Controller-%E2%80%93-USB-(-28823)-Rev-B
 
 
 int servoCenter = 700;
-int torsoMaxMovement = 120;//220 max
-int legMaxMovement = 80;//140 max
+int torsoMaxMovement = 100;//220 max
+int legMaxMovement = 120;//140 max
 
 boolean isTorsoActive = true;
 boolean isLegActive = true;
 
-int torsoMovementDelay = 200;//360 max
-int legMovementDelay = 160;//280 max
+int torsoMovementDelay = 360;//360 max
+int legMovementDelay = 500;//160;//280 max
+
+int rearOffset = 70;
+
 
 void setup()  {
   //Servo Control board
@@ -35,7 +40,8 @@ void setup()  {
   MoveServo(LEGCHANNEL2, 0);
   
  
-  
+  MoveServo(TORSOCHANNEL3, 0);
+  MoveServo(LEGCHANNEL3, 0);
   
   
   delay(5000);
@@ -46,24 +52,31 @@ void loop() {
 
   if(isTorsoActive){
       MoveServo(TORSOCHANNEL, -torsoMaxMovement);//-220
-      MoveServo(TORSOCHANNEL2, torsoMaxMovement);//220      
+      MoveServo(TORSOCHANNEL2, torsoMaxMovement);//220   
+      MoveServo(TORSOCHANNEL3, -torsoMaxMovement);//-220
       delay(torsoMovementDelay);
   }    
       
   if(isLegActive){      
       MoveServo(LEGCHANNEL, legMaxMovement);//140
       MoveServo(LEGCHANNEL2, -legMaxMovement);//-140
+      MoveServo(LEGCHANNEL3, -(legMaxMovement + rearOffset));//140    
       delay(legMovementDelay);
   }
   if(isTorsoActive){   
       MoveServo(TORSOCHANNEL, torsoMaxMovement);//220
       MoveServo(TORSOCHANNEL2, -torsoMaxMovement);//-220
+      MoveServo(TORSOCHANNEL3, torsoMaxMovement);//220
+      
+      
       delay(torsoMovementDelay);
   }
   
   if(isLegActive){      
       MoveServo(LEGCHANNEL, -legMaxMovement);//-140
       MoveServo(LEGCHANNEL2, legMaxMovement);//140
+      MoveServo(LEGCHANNEL3, legMaxMovement + rearOffset);//-140      
+      
       delay(legMovementDelay);
   }    
 
