@@ -13,16 +13,16 @@
 
 
 int servoCenter = 700;
-int torsoMaxMovement = 100;//220 max
-int legMaxMovement = 120;//140 max
+int torsoMaxMovement = 120;//120 max
+int legMaxMovement = 140;//140 max
 
 boolean isTorsoActive = true;
 boolean isLegActive = true;
 
-int torsoMovementDelay = 360;//360 max
-int legMovementDelay = 500;//160;//280 max
+int torsoMovementDelay = 250;//360 max
+int legMovementDelay = 280;//160;//280 max
 
-int rearOffset = 70;
+int rearOffset = 0;
 
 
 void setup()  {
@@ -60,7 +60,7 @@ void loop() {
   if(isLegActive){      
       MoveServo(LEGCHANNEL, legMaxMovement);//140
       MoveServo(LEGCHANNEL2, -legMaxMovement);//-140
-      MoveServo(LEGCHANNEL3, -(legMaxMovement + rearOffset));//140    
+      MoveServo(LEGCHANNEL3, -(legMaxMovement));//140    
       delay(legMovementDelay);
   }
   if(isTorsoActive){   
@@ -75,7 +75,7 @@ void loop() {
   if(isLegActive){      
       MoveServo(LEGCHANNEL, -legMaxMovement);//-140
       MoveServo(LEGCHANNEL2, legMaxMovement);//140
-      MoveServo(LEGCHANNEL3, legMaxMovement + rearOffset);//-140      
+      MoveServo(LEGCHANNEL3, legMaxMovement);//-140      
       
       delay(legMovementDelay);
   }    
